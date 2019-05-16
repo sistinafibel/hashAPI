@@ -9,9 +9,33 @@ app.get('/hash/:hashtype/:web/:encodingtype', function(req, res) {
     let generalvalue = req.params.web;
     let hashtype = req.params.hashtype; //sha256 //sha512
     let encodingtype = req.params.encodingtype; // hex , base64
+
+    var jsonObject = hashSet(generalvalue,hashtype,encodingtype);
+    res.writeHead(200, {
+        'Content-Type': 'text/json;charset=utf-8'
+    });
+    res.end(jsonObject);
+});
+
+app.get('/hash/:hashtype/:web', function(req, res) {
+    let generalvalue = req.params.web;
+    let hashtype = req.params.hashtype; //sha256 //sha512
+    let encodingtype = "hex"; // hex , base64
+
+    var jsonObject = hashSet(generalvalue,hashtype,encodingtype);
+    res.writeHead(200, {
+        'Content-Type': 'text/json;charset=utf-8'
+    });
+    res.end(jsonObject);
+});
+
+
+function hashSet(generalvalue, hashtype, encodingtype){
+
     let hashvalue = "";
 
-    if(encodingtype == null){
+    //다른값이 들어올경우..
+    if(encodingtype != "hex" && encodingtype != "base64"){
         encodingtype = "hex";
     }
 
@@ -25,12 +49,9 @@ app.get('/hash/:hashtype/:web/:encodingtype', function(req, res) {
         "generalvalue" : generalvalue ,
         "type" : hashtype
     };
-    res.writeHead(200, {
-        'Content-Type': 'text/json;charset=utf-8'
-    });
 
-    res.end(JSON.stringify(jsonObject));
-});
+    return JSON.stringify(jsonObject);
+}
 
 
 
