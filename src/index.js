@@ -1,11 +1,11 @@
 const express = require('express');
 const crypto = require('crypto');
-const ver = "2019.05.15A01";
+const ver = "2019.05.16A01";
 
 var app = express();
 
 
-app.get('/hash/:hashtype/:web/:encodingtype', function(req, res) {
+app.get('/:hashtype/:web/:encodingtype', function(req, res) {
     let generalvalue = req.params.web;
     let hashtype = req.params.hashtype; //sha256 //sha512
     let encodingtype = req.params.encodingtype; // hex , base64
@@ -17,7 +17,7 @@ app.get('/hash/:hashtype/:web/:encodingtype', function(req, res) {
     res.end(jsonObject);
 });
 
-app.get('/hash/:hashtype/:web', function(req, res) {
+app.get('/:hashtype/:web', function(req, res) {
     let generalvalue = req.params.web;
     let hashtype = req.params.hashtype; //sha256 //sha512
     let encodingtype = "hex"; // hex , base64
