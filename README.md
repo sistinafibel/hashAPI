@@ -1,2 +1,2 @@
 # hashAPI
-hashAPI
+node.js Hash Service
