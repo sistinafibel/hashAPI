@@ -5,6 +5,7 @@ const ver = "2019.05.16A01";
 var app = express();
 
 
+//encodingtype까지 받는 경우
 app.get('/:hashtype/:web/:encodingtype', function(req, res) {
     let generalvalue = req.params.web;
     let hashtype = req.params.hashtype; //sha256 //sha512
@@ -17,6 +18,7 @@ app.get('/:hashtype/:web/:encodingtype', function(req, res) {
     res.end(jsonObject);
 });
 
+//encodingtype은 제외하고 hex로 설정함.
 app.get('/:hashtype/:web', function(req, res) {
     let generalvalue = req.params.web;
     let hashtype = req.params.hashtype; //sha256 //sha512
@@ -31,25 +33,19 @@ app.get('/:hashtype/:web', function(req, res) {
 
 
 function hashSet(generalvalue, hashtype, encodingtype){
-
     let hashvalue = "";
-
     //다른값이 들어올경우..
     if(encodingtype != "hex" && encodingtype != "base64"){
         encodingtype = "hex";
     }
-
     console.log("encodingtype : " + encodingtype);
-
     hashvalue = crypto.createHash(hashtype).update(generalvalue).digest(encodingtype);
     console.log('hashed: ' , hashvalue);
-
     var jsonObject = {
         "hashvalue" : hashvalue ,
         "generalvalue" : generalvalue ,
         "type" : hashtype
     };
-
     return JSON.stringify(jsonObject);
 }
 
