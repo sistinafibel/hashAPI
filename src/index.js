@@ -4,6 +4,20 @@ const ver = "2019.05.16A01";
 
 var app = express();
 
+//http://127.0.0.1:3081/hash?keyword=키워드&hashtype=sha256&ecodingtype=hex
+app.get('/hash', function(req, res) {
+    let generalvalue = req.query.keyword;
+    let hashtype = req.query.hashtype; //sha256 //sha512
+    let encodingtype = req.query.encodingtype; // hex , base64
+
+    var jsonObject = hashSet(generalvalue,hashtype,encodingtype);
+    res.writeHead(200, {
+        'Content-Type': 'text/json;charset=utf-8'
+    });
+    res.end(jsonObject);
+});
+
+
 
 //encodingtype까지 받는 경우
 app.get('/:hashtype/:web/:encodingtype', function(req, res) {
