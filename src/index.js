@@ -6,6 +6,7 @@ var app = express();
 
 //http://127.0.0.1:3081/hash?keyword=키워드&hashtype=sha256&ecodingtype=hex
 app.get('/hash', function(req, res) {
+    console.log(req);
     let generalvalue = req.query.keyword;
     let hashtype = req.query.hashtype; //sha256 //sha512
     let encodingtype = req.query.encodingtype; // hex , base64
@@ -17,6 +18,19 @@ app.get('/hash', function(req, res) {
     res.end(jsonObject);
 });
 
+//기본 접속 경로 수정
+app.get('/', function(req, res) {
+    console.log(req);
+    let generalvalue = req.query.keyword;
+    let hashtype = req.query.hashtype; //sha256 //sha512
+    let encodingtype = req.query.encodingtype; // hex , base64
+
+    var jsonObject = JSON.stringify({"help" : "기본 파라미터는 /hash?keyword=키워드&hashtype=해시타입&encodingtype=인코딩타입 입니다."});
+    res.writeHead(200, {
+        'Content-Type': 'text/json;charset=utf-8'
+    });
+    res.end(jsonObject);
+});
 
 
 //encodingtype까지 받는 경우
